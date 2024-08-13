@@ -6,11 +6,14 @@ import {
   FlexItem,
   Button,
   Icon,
+  PanelBody,
+  PanelRow,
 } from "@wordpress/components";
 
-import { useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
 import { registerBlockType } from "@wordpress/blocks";
 import metadata from "./block.json";
+import { ChromePicker } from "react-color";
 
 (function () {
   let locked = false;
@@ -62,7 +65,23 @@ function EditComponent(props) {
 
   return (
     <div {...useBlockProps()}>
-      <div className="paying-attention-edit-block">
+      <div
+        className="paying-attention-edit-block"
+        style={{ backgroundColor: props.attributes.bgColor }}
+      >
+        <InspectorControls>
+          <PanelBody title="Background Color" initialOpen={true}>
+            <PanelRow>
+              <ChromePicker
+                color={props.attributes.bgColor}
+                onChangeComplete={(x) =>
+                  props.setAttributes({ bgColor: x.hex })
+                }
+                disableAlpha={true}
+              />
+            </PanelRow>
+          </PanelBody>
+        </InspectorControls>
         <TextControl
           label="Question:"
           value={props.attributes.question}

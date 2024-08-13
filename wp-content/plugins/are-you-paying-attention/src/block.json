@@ -9,7 +9,8 @@
   "attributes": {
     "question": { "type": "string" },
     "answers": { "type": "array", "default": [""] },
-    "correctAnswer": { "type": "number", "default": "undefined" }
+    "correctAnswer": { "type": "number", "default": "undefined" },
+    "bgColor": { "type": "string", "default": "#EBEBEB" }
   },
   "editorScript": "file:./index.jsx",
   "editorStyle": "file:./index.css",
