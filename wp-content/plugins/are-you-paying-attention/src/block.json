@@ -10,7 +10,18 @@
     "question": { "type": "string" },
     "answers": { "type": "array", "default": [""] },
     "correctAnswer": { "type": "number", "default": "undefined" },
-    "bgColor": { "type": "string", "default": "#EBEBEB" }
+    "bgColor": { "type": "string", "default": "#EBEBEB" },
+    "theAlignment": { "type": "string", "default": "left" }
+  },
+  "description": "Give your audience a chance to prove their comprehension.",
+  "example": {
+    "attributes": {
+      "question": "What is my name?",
+      "correctAnswer": 3,
+      "answers": ["Meowsalot", "Barksalot", "Purrsloud", "Brad"],
+      "theAlignment": "center",
+      "bgColor": "#CFE8F1"
+    }
   },
   "editorScript": "file:./index.jsx",
   "editorStyle": "file:./index.css",

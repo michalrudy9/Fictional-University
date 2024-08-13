@@ -10,7 +10,12 @@ import {
   PanelRow,
 } from "@wordpress/components";
 
-import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
+import {
+  useBlockProps,
+  InspectorControls,
+  BlockControls,
+  AlignmentToolbar,
+} from "@wordpress/block-editor";
 import { registerBlockType } from "@wordpress/blocks";
 import metadata from "./block.json";
 import { ChromePicker } from "react-color";
@@ -69,6 +74,12 @@ function EditComponent(props) {
         className="paying-attention-edit-block"
         style={{ backgroundColor: props.attributes.bgColor }}
       >
+        <BlockControls>
+          <AlignmentToolbar
+            value={props.attributes.theAlignment}
+            onChange={(x) => props.setAttributes({ theAlignment: x })}
+          />
+        </BlockControls>
         <InspectorControls>
           <PanelBody title="Background Color" initialOpen={true}>
             <PanelRow>
