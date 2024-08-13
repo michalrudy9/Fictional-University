@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "title": "Are You Paying Attention",
   "category": "common",
-  "icon": "welcome-learn-more",
+  "icon": "smiley",
   "attributes": {
     "question": { "type": "string" },
     "answers": { "type": "array", "default": [""] },
