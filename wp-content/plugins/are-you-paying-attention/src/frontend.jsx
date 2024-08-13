@@ -7,10 +7,19 @@ const divsToUpdate = document.querySelectorAll(".paying-attention-update-me");
 divsToUpdate.forEach((div) => {
   const data = JSON.parse(div.querySelector("pre").innerText);
   const root = ReactDOM.createRoot(div);
-  root.render(<OurComponent {...data} />);
+  root.render(<Quiz {...data} />);
   div.classList.remove("paying-attention-update-me");
 });
 
-function OurComponent(props) {
-  return <div className="paying-attention-frontend">Hello From React.</div>;
+function Quiz(props) {
+  return (
+    <div className="paying-attention-frontend">
+      <p>{props.question}</p>
+      <ul>
+        {props.answers.map(function (answer) {
+          return <li>{answer}</li>;
+        })}
+      </ul>
+    </div>
+  );
 }
