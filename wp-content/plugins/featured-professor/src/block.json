@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "ourplugin/featured-professor",
+  "version": "0.1.0",
+  "title": "Featured Professor Post Type",
+  "category": "common",
+  "icon": "welcome-learn-more",
+  "attributes": {
+    "profId": { "type": "string" }
+  },
+  "description": "",
+  "example": {
+    "attributes": {
+      "profId": "34"
+    }
+  },
+  "editorScript": "file:./index.jsx",
+  "editorStyle": "file:./index.css",
+
+  "render": "file:./render.php"
+
+}
