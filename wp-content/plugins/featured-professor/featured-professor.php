@@ -13,12 +13,24 @@ class FeaturedProfessor
 {
   function __construct()
   {
-    add_action('init', array($this, 'onInit'));
+    add_action('init', [$this, 'onInit']);
   }
 
   function onInit()
   {
-    register_block_type(__DIR__ . '/build');
+    wp_register_script('featuredProfessorScript', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-i18n', 'wp-editor'));
+    wp_register_style('featuredProfessorStyle', plugin_dir_url(__FILE__) . 'build/index.css');
+
+    register_block_type('ourplugin/featured-professor', array(
+      'render_callback' => [$this, 'renderCallback'],
+      'editor_script' => 'featuredProfessorScript',
+      'editor_style' => 'featuredProfessorStyle'
+    ));
+  }
+
+  function renderCallback($attributes)
+  {
+    return '<p>We will replace this content soon.</p>';
   }
 }
 
