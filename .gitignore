@@ -14,3 +14,7 @@ wp-content/plugins/featured-professor/build
 
 .DS_Store
 wp-content/.DS_Store
+
+wp-content/themes/fictional-block-theme/node_modules
+wp-content/themes/fictional-block-theme/build
+wp-content/themes/fictional-block-theme/package-lock.json
