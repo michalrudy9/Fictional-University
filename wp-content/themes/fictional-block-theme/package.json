@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "wp-scripts start src/index our-blocks/banner our-blocks/genericheading our-blocks/genericbutton",
+    "start": "wp-scripts start src/index our-blocks/banner our-blocks/genericheading our-blocks/genericbutton our-blocks/slideshow our-blocks/slide",
     "dev": "wp-scripts start",
     "devFast": "wp-scripts start",
     "test": "echo \"Error: no test specified\" && exit 1"
