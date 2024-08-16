@@ -218,6 +218,8 @@ class PlaceholderBlock
 }
 
 new PlaceholderBlock("eventsandblogs");
+new PlaceholderBlock('header');
+new PlaceholderBlock('footer');
 
 class JSXBlock
 {
