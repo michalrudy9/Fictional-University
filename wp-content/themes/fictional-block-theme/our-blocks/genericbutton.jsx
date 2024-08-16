@@ -101,7 +101,10 @@ function EditComponent(props) {
         onChange={handleTextChange}
       />
       {isLinkPickerVislible && (
-        <Popover position="middle center">
+        <Popover
+          position="middle center"
+          onFocusOutside={() => setIsLinkPickerVislible(false)}
+        >
           <LinkControl
             settings={[]}
             value={props.attributes.linkObject}
