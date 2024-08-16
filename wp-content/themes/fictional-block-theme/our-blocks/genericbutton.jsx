@@ -4,11 +4,15 @@ import {
   ToolbarButton,
   Popover,
   Button,
+  PanelBody,
+  PanelRow,
+  ColorPalette,
 } from "@wordpress/components";
 import {
   RichText,
   BlockControls,
   __experimentalLinkControl as LinkControl,
+  InspectorControls,
 } from "@wordpress/block-editor";
 import { useState } from "@wordpress/element";
 
@@ -17,7 +21,8 @@ wp.blocks.registerBlockType("ourblocktheme/genericbutton", {
   attributes: {
     text: { type: "string" },
     size: { type: "string", default: "large" },
-    linkObject: { type: "object" },
+    linkObject: { type: "object", default: { url: "" } },
+    colorName: { type: "string" },
   },
   edit: EditComponent,
   save: SaveComponent,
@@ -35,6 +40,16 @@ function EditComponent(props) {
 
   function handleLinkChange(newLink) {
     props.setAttributes({ linkObject: newLink });
+  }
+
+  const ourColors = [
+    { name: "blue", color: "#0d3b66" },
+    { name: "orange", color: "#ee964b" },
+    { name: "dark-orange", color: "#f95738" },
+  ];
+
+  function handleColorChange(colorCode) {
+    props.setAttributes({ colorName: colorCode });
   }
 
   return (
@@ -64,6 +79,17 @@ function EditComponent(props) {
           </ToolbarButton>
         </ToolbarGroup>
       </BlockControls>
+      <InspectorControls>
+        <PanelBody title="Color" initialOpen={true}>
+          <PanelRow>
+            <ColorPalette
+              colors={ourColors}
+              value={props.attributes.colorName}
+              onChange={handleColorChange}
+            />
+          </PanelRow>
+        </PanelBody>
+      </InspectorControls>
       <RichText
         allowedFormats={[]}
         tagName="a"
