@@ -1,14 +1,15 @@
 import apiFetch from "@wordpress/api-fetch";
-import { useEffect } from "@wordpress/element";
-import { Button, PanelRow, PanelBody } from "@wordpress/components";
+import { Button, PanelBody, PanelRow } from "@wordpress/components";
 import {
   InnerBlocks,
   InspectorControls,
   MediaUpload,
   MediaUploadCheck,
 } from "@wordpress/block-editor";
+import { registerBlockType } from "@wordpress/blocks";
+import { useEffect } from "@wordpress/element";
 
-wp.blocks.registerBlockType("ourblocktheme/slide", {
+registerBlockType("ourblocktheme/slide", {
   title: "Slide",
   supports: {
     align: ["full"],
@@ -23,21 +24,23 @@ wp.blocks.registerBlockType("ourblocktheme/slide", {
 });
 
 function EditComponent(props) {
-  useEffect(() => {
-    if (props.attributes.imgID) {
-      async function go() {
-        const response = await apiFetch({
-          path: `/wp/v2/media/${props.attributes.imgID}`,
-          methos: "GET",
-        });
-        props.setAttributes({
-          imgURL: response.media_details.sizes.pageBanner.source_url,
-        });
+  useEffect(
+    function () {
+      if (props.attributes.imgID) {
+        async function go() {
+          const response = await apiFetch({
+            path: `/wp/v2/media/${props.attributes.imgID}`,
+            method: "GET",
+          });
+          props.setAttributes({
+            imgURL: response.media_details.sizes.pageBanner.source_url,
+          });
+        }
+        go();
       }
-
-      go();
-    }
-  }, [props.attributes.imgID]);
+    },
+    [props.attributes.imgID]
+  );
 
   function onFileSelect(x) {
     props.setAttributes({ imgID: x.id });
@@ -60,20 +63,20 @@ function EditComponent(props) {
           </PanelRow>
         </PanelBody>
       </InspectorControls>
-      <div className="page-banner">
-        <div
-          className="page-banner__bg-image"
-          style={{
-            backgroundImage: `url('${props.attributes.imgURL}')`,
-          }}
-        ></div>
-        <div className="page-banner__content container t-center c-white">
-          <InnerBlocks
-            allowedBlocks={[
-              "ourblocktheme/genericheading",
-              "ourblocktheme/genericbutton",
-            ]}
-          />
+
+      <div
+        className="hero-slider__slide"
+        style={{ backgroundImage: `url('${props.attributes.imgURL}')` }}
+      >
+        <div className="hero-slider__interior container">
+          <div className="hero-slider__overlay t-center">
+            <InnerBlocks
+              allowedBlocks={[
+                "ourblocktheme/genericheading",
+                "ourblocktheme/genericbutton",
+              ]}
+            />
+          </div>
         </div>
       </div>
     </>
