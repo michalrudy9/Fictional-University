@@ -18,6 +18,7 @@ registerBlockType("ourblocktheme/slide", {
     align: { type: "string", default: "full" },
     imgID: { type: "number" },
     imgURL: { type: "string", default: banner.fallbackimage },
+    themeimage: { type: "string" },
   },
   edit: EditComponent,
   save: SaveComponent,
@@ -41,6 +42,15 @@ function EditComponent(props) {
     },
     [props.attributes.imgID]
   );
+
+  useEffect(() => {
+    if (props.attributes.themeimage) {
+      props.setAttributes({
+        themeimage: "",
+        imgURL: `${slide.themeimagepath}${props.attributes.themeimage}`,
+      });
+    }
+  }, []);
 
   function onFileSelect(x) {
     props.setAttributes({ imgID: x.id });
