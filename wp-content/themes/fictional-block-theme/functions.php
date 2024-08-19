@@ -274,3 +274,19 @@ new JSXBlock('genericheading');
 new JSXBlock('genericbutton');
 new JSXBlock('slideshow', true);
 new JSXBlock('slide', true, ['themeimagepath' => get_theme_file_uri('/images/')]);
+
+function myallowedblocks($allowed_block_types, $editor_contex)
+{
+  // if($editor_contex->post->post_type == 'professor') {
+  //   return ['core/pharagraph' ...];
+  // }
+
+  //If you are on a page/post editor screen
+  if (!empty($editor_contex->post)) {
+    return $allowed_block_types;
+  }
+  // If you are on the FSE screen
+  return ['ourblocktheme/header', 'ourblocktheme/footer'];
+}
+
+add_filter('allowed_block_types_all', 'myallowedblocks', 10, 2);
