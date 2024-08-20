@@ -189,44 +189,6 @@ function makeNotePrivate($data, $postarr)
   return $data;
 }
 
-class PlaceholderBlock
-{
-  private $name;
-
-  function __construct($name)
-  {
-    $this->name = $name;
-    add_action('init', [$this, 'onInit']);
-  }
-
-  function ourRenderCallback($attributes, $content)
-  {
-    ob_start();
-    require get_theme_file_path("/our-blocks/{$this->name}.php");
-    return ob_get_clean();
-  }
-
-  function onInit()
-  {
-    wp_register_script($this->name, get_stylesheet_directory_uri() . "/our-blocks/{$this->name}.js", array('wp-blocks', 'wp-editor'));
-
-    register_block_type("ourblocktheme/{$this->name}", array(
-      'editor_script' => $this->name,
-      'render_callback' => [$this, 'ourRenderCallback']
-    ));
-  }
-}
-
-// new PlaceholderBlock("eventsandblogs");
-// new PlaceholderBlock('header');
-// new PlaceholderBlock('footer');
-// new PlaceholderBlock("singlepost");
-// new PlaceholderBlock("page");
-// new PlaceholderBlock("blogindex");
-// new PlaceholderBlock("programarchive");
-// new PlaceholderBlock("singleprogram");
-// new PlaceholderBlock("singleprofessor");
-// new PlaceholderBlock("mynotes");
 
 class JSXBlock
 {
@@ -269,7 +231,7 @@ class JSXBlock
   }
 }
 
-new JSXBlock('banner', true, ['fallbackimage' => get_theme_file_uri('/images/library-hero.jpg')]);
+// new JSXBlock('banner', true, ['fallbackimage' => get_theme_file_uri('/images/library-hero.jpg')]);
 new JSXBlock('genericheading');
 new JSXBlock('genericbutton');
 new JSXBlock('slideshow', true);
@@ -295,6 +257,9 @@ add_filter('allowed_block_types_all', 'myallowedblocks', 10, 2);
 
 function our_new_blocks()
 {
+  wp_localize_script('wp-editor', 'ourThemeData', array('themePath' => get_stylesheet_directory_uri()));
+
+  register_block_type_from_metadata(__DIR__ . '/build/banner');
   register_block_type_from_metadata(__DIR__ . '/build/footer');
   register_block_type_from_metadata(__DIR__ . '/build/header');
   register_block_type_from_metadata(__DIR__ . '/build/eventsandblogs');

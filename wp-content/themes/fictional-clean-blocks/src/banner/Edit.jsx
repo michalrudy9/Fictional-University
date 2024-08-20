@@ -1,50 +1,49 @@
 import apiFetch from "@wordpress/api-fetch";
-import { useEffect } from "@wordpress/element";
-import { Button, PanelRow, PanelBody } from "@wordpress/components";
+import { Button, PanelBody, PanelRow } from "@wordpress/components";
 import {
+  useBlockProps,
   InnerBlocks,
   InspectorControls,
   MediaUpload,
   MediaUploadCheck,
 } from "@wordpress/block-editor";
+import { useEffect } from "@wordpress/element";
 
-wp.blocks.registerBlockType("ourblocktheme/banner", {
-  title: "Banner",
-  supports: {
-    align: ["full"],
-  },
-  attributes: {
-    align: { type: "string", default: "full" },
-    imgID: { type: "number" },
-    imgURL: { type: "string", default: banner.fallbackimage },
-  },
-  edit: EditComponent,
-  save: SaveComponent,
-});
+export default function Edit(props) {
+  const blockProps = useBlockProps();
 
-function EditComponent(props) {
-  useEffect(() => {
-    if (props.attributes.imgID) {
-      async function go() {
-        const response = await apiFetch({
-          path: `/wp/v2/media/${props.attributes.imgID}`,
-          methos: "GET",
-        });
-        props.setAttributes({
-          imgURL: response.media_details.sizes.pageBanner.source_url,
-        });
-      }
-
-      go();
+  useEffect(function () {
+    if (!props.attributes.imgURL) {
+      props.setAttributes({
+        imgURL: ourThemeData.themePath + "/images/library-hero.jpg",
+      });
     }
-  }, [props.attributes.imgID]);
+  }, []);
+
+  useEffect(
+    function () {
+      if (props.attributes.imgID) {
+        async function go() {
+          const response = await apiFetch({
+            path: `/wp/v2/media/${props.attributes.imgID}`,
+            method: "GET",
+          });
+          props.setAttributes({
+            imgURL: response.media_details.sizes.pageBanner.source_url,
+          });
+        }
+        go();
+      }
+    },
+    [props.attributes.imgID]
+  );
 
   function onFileSelect(x) {
     props.setAttributes({ imgID: x.id });
   }
 
   return (
-    <>
+    <div {...blockProps}>
       <InspectorControls>
         <PanelBody title="Background" initialOpen={true}>
           <PanelRow>
@@ -63,9 +62,7 @@ function EditComponent(props) {
       <div className="page-banner">
         <div
           className="page-banner__bg-image"
-          style={{
-            backgroundImage: `url('${props.attributes.imgURL}')`,
-          }}
+          style={{ backgroundImage: `url('${props.attributes.imgURL}')` }}
         ></div>
         <div className="page-banner__content container t-center c-white">
           <InnerBlocks
@@ -76,10 +73,6 @@ function EditComponent(props) {
           />
         </div>
       </div>
-    </>
+    </div>
   );
-}
-
-function SaveComponent() {
-  return <InnerBlocks.Content />;
 }
