@@ -217,16 +217,16 @@ class PlaceholderBlock
   }
 }
 
-new PlaceholderBlock("eventsandblogs");
-new PlaceholderBlock('header');
+// new PlaceholderBlock("eventsandblogs");
+// new PlaceholderBlock('header');
 // new PlaceholderBlock('footer');
-new PlaceholderBlock("singlepost");
-new PlaceholderBlock("page");
-new PlaceholderBlock("blogindex");
-new PlaceholderBlock("programarchive");
-new PlaceholderBlock("singleprogram");
-new PlaceholderBlock("singleprofessor");
-new PlaceholderBlock("mynotes");
+// new PlaceholderBlock("singlepost");
+// new PlaceholderBlock("page");
+// new PlaceholderBlock("blogindex");
+// new PlaceholderBlock("programarchive");
+// new PlaceholderBlock("singleprogram");
+// new PlaceholderBlock("singleprofessor");
+// new PlaceholderBlock("mynotes");
 
 class JSXBlock
 {
@@ -296,6 +296,23 @@ add_filter('allowed_block_types_all', 'myallowedblocks', 10, 2);
 function our_new_blocks()
 {
   register_block_type_from_metadata(__DIR__ . '/build/footer');
+  register_block_type_from_metadata(__DIR__ . '/build/header');
+  register_block_type_from_metadata(__DIR__ . '/build/eventsandblogs');
+  register_block_type_from_metadata(__DIR__ . '/build/singlepost');
+  register_block_type_from_metadata(__DIR__ . '/build/page');
+  register_block_type_from_metadata(__DIR__ . '/build/blogindex');
+  register_block_type_from_metadata(__DIR__ . '/build/programarchive');
+  register_block_type_from_metadata(__DIR__ . '/build/singleprogram');
+  register_block_type_from_metadata(__DIR__ . '/build/singleprofessor');
+  register_block_type_from_metadata(__DIR__ . '/build/mynotes');
+  register_block_type_from_metadata(__DIR__ . '/build/archivecampus');
+  register_block_type_from_metadata(__DIR__ . '/build/archiveevent');
+  register_block_type_from_metadata(__DIR__ . '/build/archive');
+  register_block_type_from_metadata(__DIR__ . '/build/pastevents');
+  register_block_type_from_metadata(__DIR__ . '/build/singlecampus');
+  register_block_type_from_metadata(__DIR__ . '/build/singleevent');
+  register_block_type_from_metadata(__DIR__ . '/build/search');
+  register_block_type_from_metadata(__DIR__ . '/build/searchresults');
 }
 
 add_action('init', 'our_new_blocks');
