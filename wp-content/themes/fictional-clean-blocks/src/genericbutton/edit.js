@@ -1,5 +1,5 @@
-import { link } from "@wordpress/icons";
-import ourColors from "../inc/ourColors";
+import ourColors from "../../inc/ourColors"
+import { link } from "@wordpress/icons"
 import {
   ToolbarGroup,
   ToolbarButton,
@@ -7,54 +7,48 @@ import {
   Button,
   PanelBody,
   PanelRow,
-  ColorPalette,
-} from "@wordpress/components";
+  ColorPalette
+} from "@wordpress/components"
 import {
+  useBlockProps,
   RichText,
+  InspectorControls,
   BlockControls,
   __experimentalLinkControl as LinkControl,
-  InspectorControls,
-  getColorObjectByColorValue,
-} from "@wordpress/block-editor";
-import { useState } from "@wordpress/element";
+  getColorObjectByColorValue
+} from "@wordpress/block-editor"
+import { registerBlockType } from "@wordpress/blocks"
+import { useState } from "@wordpress/element"
 
-wp.blocks.registerBlockType("ourblocktheme/genericbutton", {
-  title: "Generic Button",
-  attributes: {
-    text: { type: "string" },
-    size: { type: "string", default: "large" },
-    linkObject: { type: "object", default: { url: "" } },
-    colorName: { type: "string", default: "blue" },
-  },
-  edit: EditComponent,
-  save: SaveComponent,
-});
+export default function Edit(props) {
+  const blockProps = useBlockProps()
 
-function EditComponent(props) {
-  const [isLinkPickerVislible, setIsLinkPickerVislible] = useState(false);
+  const [isLinkPickerVisible, setIsLinkPickerVisible] = useState(false)
+
   function handleTextChange(x) {
-    props.setAttributes({ text: x });
+    props.setAttributes({ text: x })
   }
 
   function buttonHandler() {
-    setIsLinkPickerVislible((prev) => !prev);
+    setIsLinkPickerVisible(prev => !prev)
   }
 
   function handleLinkChange(newLink) {
-    props.setAttributes({ linkObject: newLink });
+    props.setAttributes({ linkObject: newLink })
   }
 
-  const currentColorValue = ourColors.filter((color) => {
-    return color.name == props.attributes.colorName;
-  })[0].color;
+  const currentColorValue = ourColors.filter(color => {
+    return color.name == props.attributes.colorName
+  })[0].color
 
   function handleColorChange(colorCode) {
-    const { name } = getColorObjectByColorValue(ourColors, colorCode);
-    props.setAttributes({ colorName: name });
+    // from the hex value that the color palette gives us, we need to find its color name
+    const { name } = getColorObjectByColorValue(ourColors, colorCode)
+    props.setAttributes({ colorName: name })
   }
 
   return (
-    <>
+    <div {...blockProps}>
       <BlockControls>
         <ToolbarGroup>
           <ToolbarButton onClick={buttonHandler} icon={link} />
@@ -100,11 +94,8 @@ function EditComponent(props) {
         value={props.attributes.text}
         onChange={handleTextChange}
       />
-      {isLinkPickerVislible && (
-        <Popover
-          position="middle center"
-          onFocusOutside={() => setIsLinkPickerVislible(false)}
-        >
+      {isLinkPickerVisible && (
+        <Popover position="middle center">
           <LinkControl
             settings={[]}
             value={props.attributes.linkObject}
@@ -112,24 +103,13 @@ function EditComponent(props) {
           />
           <Button
             variant="primary"
-            onClick={() => setIsLinkPickerVislible(false)}
+            onClick={() => setIsLinkPickerVisible(false)}
             style={{ display: "block", width: "100%" }}
           >
             Confirm Link
           </Button>
         </Popover>
       )}
-    </>
-  );
-}
-
-function SaveComponent(props) {
-  return (
-    <a
-      href={props.attributes.linkObject.url}
-      className={`btn btn--${props.attributes.size} btn--${props.attributes.colorName}`}
-    >
-      {props.attributes.text}
-    </a>
-  );
+    </div>
+  )
 }

@@ -1,23 +1,16 @@
-import { ToolbarGroup, ToolbarButton } from "@wordpress/components";
-import { RichText, BlockControls } from "@wordpress/block-editor";
+import { ToolbarGroup, ToolbarButton } from "@wordpress/components"
+import { RichText, BlockControls, useBlockProps } from "@wordpress/block-editor"
+import { registerBlockType } from "@wordpress/blocks"
 
-wp.blocks.registerBlockType("ourblocktheme/genericheading", {
-  title: "Generic Heading",
-  attributes: {
-    text: { type: "string" },
-    size: { type: "string", default: "large" },
-  },
-  edit: EditComponent,
-  save: SaveComponent,
-});
+export default function Edit(props) {
+  const blockProps = useBlockProps()
 
-function EditComponent(props) {
   function handleTextChange(x) {
-    props.setAttributes({ text: x });
+    props.setAttributes({ text: x })
   }
 
   return (
-    <>
+    <div {...blockProps}>
       <BlockControls>
         <ToolbarGroup>
           <ToolbarButton
@@ -47,27 +40,6 @@ function EditComponent(props) {
         value={props.attributes.text}
         onChange={handleTextChange}
       />
-    </>
-  );
-}
-
-function SaveComponent(props) {
-  function createTagName() {
-    switch (props.attributes.size) {
-      case "large":
-        return "h1";
-      case "medium":
-        return "h2";
-      case "small":
-        return "h3";
-    }
-  }
-
-  return (
-    <RichText.Content
-      tagName={createTagName()}
-      value={props.attributes.text}
-      className={`headline headline--${props.attributes.size}`}
-    />
-  );
+    </div>
+  )
 }
