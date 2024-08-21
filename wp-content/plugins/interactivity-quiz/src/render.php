@@ -14,7 +14,11 @@
 
 ?>
 
-<div data-wp-interactive="create-block" data-wp-context='{"clickCount": 0}'>
-	<p>The button below has been clicked <span data-wp-text="context.clickCount"></span> times.</p>
-	<button data-wp-on--click="actions.buttonHandler">Click me</button>
+<div style="background-color: <?= $attributes["bgColor"] ?>" class="paying-attention-frontend" data-wp-interactive="create-block" <?= wp_interactivity_data_wp_context($attributes) ?>>
+	<p><?= $attributes['question'] ?></p>
+	<ul>
+		<template data-wp-each="context.answers">
+			<li data-wp-on--click="actions.guessAttempt" data-wp-text="context.item"></li>
+		</template>
+	</ul>
 </div>

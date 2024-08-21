@@ -5,9 +5,8 @@ import { store, getContext } from "@wordpress/interactivity";
 
 store("create-block", {
   actions: {
-    buttonHandler: () => {
+    guessAttempt: () => {
       const context = getContext();
-      context.clickCount++;
     },
     toggle: () => {
       const context = getContext();
