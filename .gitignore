@@ -22,3 +22,7 @@ wp-content/themes/fictional-block-theme/package-lock.json
 wp-content/themes/fictional-clean-blocks/node_modules
 wp-content/themes/fictional-clean-blocks/build
 wp-content/themes/fictional-clean-blocks/package-lock.json
+
+wp-content/plugins/interactivity-quiz/node_modules
+wp-content/plugins/interactivity-quiz/package-lock.json
+wp-content/plugins/interactivity-quiz/build
