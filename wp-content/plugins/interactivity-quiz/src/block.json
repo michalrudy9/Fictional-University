@@ -8,7 +8,7 @@
   "attributes": {
     "question": { "type": "string" },
     "answers": { "type": "array", "default": [""] },
-    "correctAnswer": { "type": "number", "default": "undefined" },
+    "correctAnswer": { "type": "number", "default": "" },
     "bgColor": { "type": "string", "default": "#EBEBEB" },
     "theAlignment": { "type": "string", "default": "left" }
   },
